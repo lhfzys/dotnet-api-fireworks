@@ -1,4 +1,3 @@
-using Ardalis.Result.AspNetCore;
 using Fireworks.Api.Extensions;
 using Fireworks.Application.Features.Users.CreateUser;
 using MediatR;

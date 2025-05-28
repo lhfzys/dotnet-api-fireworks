@@ -25,27 +25,27 @@ if (app.Environment.IsDevelopment())
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 app.MapUserEndpoints();
-using (var scope = app.Services.CreateScope())
-{
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
-
-    // 创建Admin角色
-    if (!await roleManager.RoleExistsAsync("Admin"))
-    {
-        await roleManager.CreateAsync(
-            new ApplicationRole { Name = "Admin" }
-        );
-    }
-
-    // 创建初始管理员用户
-    var adminUser = await userManager.FindByEmailAsync("admin@example.com");
-    if (adminUser == null)
-    {
-        adminUser = new ApplicationUser { UserName = "admin", Email = "admin@example.com" };
-        await userManager.CreateAsync(adminUser, "123456");
-        await userManager.AddToRoleAsync(adminUser, "Admin");
-    }
-}
+// using (var scope = app.Services.CreateScope())
+// {
+//     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+//     var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
+//
+//     // 创建Admin角色
+//     if (!await roleManager.RoleExistsAsync("Admin"))
+//     {
+//         await roleManager.CreateAsync(
+//             new ApplicationRole { Name = "Admin" }
+//         );
+//     }
+//
+//     // 创建初始管理员用户
+//     var adminUser = await userManager.FindByEmailAsync("admin@example.com");
+//     if (adminUser == null)
+//     {
+//         adminUser = new ApplicationUser { UserName = "admin", Email = "admin@example.com" };
+//         await userManager.CreateAsync(adminUser, "123456");
+//         await userManager.AddToRoleAsync(adminUser, "Admin");
+//     }
+// }
 
 app.Run();

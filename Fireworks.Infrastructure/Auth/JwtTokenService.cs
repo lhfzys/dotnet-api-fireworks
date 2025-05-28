@@ -1,0 +1,49 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using Fireworks.Domain.Identity.Entities;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+
+namespace Fireworks.Infrastructure.Auth;
+
+public interface IJwtTokenService
+{
+    string GenerateAccessToken(ApplicationUser user, IList<string> roles);
+    RefreshToken GenerateRefreshToken(string ipAddress);
+}
+
+public class JwtTokenService(IConfiguration config) : IJwtTokenService
+{
+
+    public string GenerateAccessToken(ApplicationUser user, IList<string> roles)
+    {
+        var claims = new List<Claim>
+        {
+            // new(ClaimTypes.NameIdentifier, user.Id),
+            new(ClaimTypes.Name, user.UserName ?? ""),
+            new(ClaimTypes.Email, user.Email ?? "")
+        };
+        claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Key"]!));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+        var token = new JwtSecurityToken(
+            issuer: config["JwtSettings:Issuer"],
+            audience: config["JwtSettings:Audience"],
+            claims: claims,
+            expires: DateTime.UtcNow.AddMinutes(15),
+            signingCredentials: creds);
+        return new JwtSecurityTokenHandler().WriteToken(token);
+    }
+
+    public RefreshToken GenerateRefreshToken(string ipAddress)
+    {
+        return new RefreshToken
+        {
+            Token = Convert.ToBase64String(RandomNumberGenerator.GetBytes(64)),
+            Expires = DateTime.UtcNow.AddDays(7),
+            CreatedByIp = ipAddress
+        };
+    }
+}
