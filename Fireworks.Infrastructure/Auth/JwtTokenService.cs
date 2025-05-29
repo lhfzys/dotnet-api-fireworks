@@ -2,37 +2,31 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using Fireworks.Application.common;
+using Fireworks.Application.common.Settings;
 using Fireworks.Domain.Identity.Entities;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Fireworks.Infrastructure.Auth;
 
-public interface IJwtTokenService
+public class JwtTokenService(JwtSettings jwtSettings) : IJwtTokenService
 {
-    string GenerateAccessToken(ApplicationUser user, IList<string> roles);
-    RefreshToken GenerateRefreshToken(string ipAddress);
-}
-
-public class JwtTokenService(IConfiguration config) : IJwtTokenService
-{
-
     public string GenerateAccessToken(ApplicationUser user, IList<string> roles)
     {
         var claims = new List<Claim>
         {
-            // new(ClaimTypes.NameIdentifier, user.Id),
+            new(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new(ClaimTypes.Name, user.UserName ?? ""),
             new(ClaimTypes.Email, user.Email ?? "")
         };
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(config["JwtSettings:Key"]!));
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Key!));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
         var token = new JwtSecurityToken(
-            issuer: config["JwtSettings:Issuer"],
-            audience: config["JwtSettings:Audience"],
+            issuer: jwtSettings.Issuer,
+            audience: jwtSettings.Audience,
             claims: claims,
-            expires: DateTime.UtcNow.AddMinutes(15),
+            expires: DateTime.UtcNow.AddMinutes(jwtSettings.ExpirationMinutes),
             signingCredentials: creds);
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
@@ -45,5 +39,10 @@ public class JwtTokenService(IConfiguration config) : IJwtTokenService
             Expires = DateTime.UtcNow.AddDays(7),
             CreatedByIp = ipAddress
         };
+    }
+
+    public ClaimsPrincipal? ValidateAccessToken(string token)
+    {
+        throw new NotImplementedException();
     }
 }

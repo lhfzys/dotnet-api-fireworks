@@ -8,7 +8,7 @@ public static class UserEndpoints
 {
     public static void MapUserEndpoints(this IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("api/users").WithTags("User");
+        var group = builder.MapGroup("api/users").WithTags("User").RequireAuthorization();
 
         group.MapPost("/", async (IMediator mediator, CreateUserRequest request)
             => (await mediator.Send(request)).ToCustomMinimalApiResult());

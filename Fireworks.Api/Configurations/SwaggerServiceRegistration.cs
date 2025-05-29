@@ -30,11 +30,11 @@ public static class SwaggerServiceRegistration
                 c.IncludeXmlComments(xmlPath);
             }
 
-            c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
-            c.OperationFilter<SecurityRequirementsOperationFilter>();
-            
+            // c.OperationFilter<AppendAuthorizeToSummaryOperationFilter>();
+            // c.OperationFilter<SecurityRequirementsOperationFilter>();
+
             // To Enable authorization using Swagger (JWT)    
-            c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme()
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
             {
                 Name = "Authorization",
                 Type = SecuritySchemeType.Http,
@@ -42,10 +42,19 @@ public static class SwaggerServiceRegistration
                 In = ParameterLocation.Header,
                 Description = "输入 'Bearer {token}'",
                 Scheme = JwtBearerDefaults.AuthenticationScheme,
-                Reference = new OpenApiReference
+            });
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
                 {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = JwtBearerDefaults.AuthenticationScheme
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    new List<string>()
                 }
             });
         });

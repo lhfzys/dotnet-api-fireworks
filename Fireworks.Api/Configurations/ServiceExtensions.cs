@@ -10,7 +10,9 @@ public static class ServiceExtensions
     {
         services
             .AddPersistenceServices(configuration)
+            .AddAuthorizationServices(configuration)
             .AddIdentityServices(configuration)
+            .AddSettingServices(configuration)
             .AddSwaggerServices()
             .AddMediatRServices()
             .AddApplicationServices();

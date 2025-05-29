@@ -14,7 +14,16 @@
       <PackageReference Include="Ardalis.Result" Version="10.1.0" />
       <PackageReference Include="Ardalis.Result.AspNetCore" Version="10.1.0" />
       <PackageReference Include="Ardalis.Result.FluentValidation" Version="10.1.0" />
+      <PackageReference Include="IPTools.China" Version="1.6.0" />
+      <PackageReference Include="IPTools.Core" Version="1.6.0" />
       <PackageReference Include="Mapster" Version="7.4.0" />
+      <PackageReference Include="UAParser" Version="3.1.47" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <None Include="ip2region.db">
+            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        </None>
     </ItemGroup>
 
 </Project>

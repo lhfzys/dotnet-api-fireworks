@@ -1,3 +1,5 @@
+using Fireworks.Application.common;
+using Fireworks.Infrastructure.Auth;
 using Fireworks.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -5,7 +7,8 @@ namespace Fireworks.Api.Configurations.ServiceRegistrations;
 
 public static class PersistenceServiceRegistration
 {
-    public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddPersistenceServices(this IServiceCollection services,
+        IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContext>(options =>
         {
@@ -18,6 +21,9 @@ public static class PersistenceServiceRegistration
                         errorCodesToAdd: null);
                 });
         });
+        services.AddScoped<IApplicationDbContext>(provider =>
+            provider.GetRequiredService<ApplicationDbContext>());
+        services.AddScoped<IJwtTokenService, JwtTokenService>();
         return services;
     }
 }

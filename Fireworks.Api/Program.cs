@@ -1,14 +1,14 @@
+using System.Security.Claims;
 using Fireworks.Api.Configurations;
 using Fireworks.Api.Configurations.ServiceRegistrations;
 using Fireworks.Api.Endpoints;
 using Fireworks.Api.Middleware;
-using Fireworks.Domain.Identity.Entities;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddOpenApi();
 builder.Services.AddApplicationServices(builder.Configuration);
+
 
 if (builder.Environment.EnvironmentName != "Testing")
 {
@@ -16,15 +16,19 @@ if (builder.Environment.EnvironmentName != "Testing")
 }
 
 var app = builder.Build();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseSwaggerDocumentation();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
-
-app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseHttpsRedirection();
 app.MapUserEndpoints();
+app.MapRoleEndpoints();
+app.MapUserRolesEndpoints();
+app.MapLoginEndpoints();
 // using (var scope = app.Services.CreateScope())
 // {
 //     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
