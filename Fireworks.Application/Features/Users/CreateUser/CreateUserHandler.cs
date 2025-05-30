@@ -6,7 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace Fireworks.Application.Features.Users.CreateUser;
 
-public class CreateUserHandler(UserManager<ApplicationUser> userManager, ILogger<CreateUserRequest> logger)
+public class CreateUserHandler(
+    UserManager<ApplicationUser> userManager,
+    ILogger<CreateUserRequest> logger)
     : IRequestHandler<CreateUserRequest, Result<Guid>>
 {
     public async Task<Result<Guid>> Handle(CreateUserRequest request, CancellationToken cancellationToken)
@@ -14,8 +16,7 @@ public class CreateUserHandler(UserManager<ApplicationUser> userManager, ILogger
         if (await userManager.FindByNameAsync(request.UserName) != null)
         {
             return Result<Guid>.Invalid(
-                new ValidationError("username","用户名已被占用"));
-            ;
+                new ValidationError("username", "用户名已被占用"));
         }
 
         var user = new ApplicationUser

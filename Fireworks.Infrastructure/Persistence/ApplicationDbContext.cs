@@ -13,12 +13,26 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 {
     public DbSet<RefreshToken> RefreshTokens { get; set; }
     public DbSet<UserLoginLog> UserLoginLogs { get; set; }
+    public DbSet<Permission> Permissions { get; set; }
+    public DbSet<RolePermission> RolePermissions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
         builder.ApplyIdentityTableNamingConvention();
 
+        builder.Entity<RolePermission>().HasKey(rp => new { rp.RoleId, rp.PermissionId });
+        
+        builder.Entity<RolePermission>()
+            .HasOne(rp => rp.Role)
+            .WithMany(r => r.RolePermissions)
+            .HasForeignKey(rp => rp.RoleId);
+
+        builder.Entity<RolePermission>()
+            .HasOne(rp => rp.Permission)
+            .WithMany()
+            .HasForeignKey(rp => rp.PermissionId);
+        
         builder.Entity<RefreshToken>(entity =>
         {
             entity.HasKey(x => x.Id);

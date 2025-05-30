@@ -1,9 +1,9 @@
 using Ardalis.Result;
+using Fireworks.Application.common.Factories;
 using FluentValidation;
 using MediatR;
 
-
-namespace Fireworks.Application.common;
+namespace Fireworks.Application.common.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>

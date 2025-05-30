@@ -17,7 +17,11 @@
       <PackageReference Include="IPTools.China" Version="1.6.0" />
       <PackageReference Include="IPTools.Core" Version="1.6.0" />
       <PackageReference Include="Mapster" Version="7.4.0" />
+      <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
       <PackageReference Include="UAParser" Version="3.1.47" />
+      <PackageReference Include="X.PagedList" Version="10.5.7" />
+      <PackageReference Include="X.PagedList.EF" Version="10.5.7" />
+      <PackageReference Include="X.PagedList.Mvc.Core" Version="10.5.7" />
     </ItemGroup>
     
     <ItemGroup>

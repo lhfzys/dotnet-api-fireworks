@@ -3,6 +3,7 @@ using System;
 using Fireworks.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fireworks.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250530103907_AddRolePermissions")]
+    partial class AddRolePermissions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,39 +31,15 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<string>("Icon")
-                        .HasColumnType("text");
-
-                    b.Property<bool>("IsEnabled")
-                        .HasColumnType("boolean");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("Order")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid?>("ParentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Url")
-                        .HasColumnType("text");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("ParentId");
 
                     b.ToTable("Permissions");
                 });
@@ -357,15 +336,6 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
                     b.ToTable("UserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Fireworks.Domain.Entities.Permission", b =>
-                {
-                    b.HasOne("Fireworks.Domain.Entities.Permission", "Parent")
-                        .WithMany("Children")
-                        .HasForeignKey("ParentId");
-
-                    b.Navigation("Parent");
-                });
-
             modelBuilder.Entity("Fireworks.Domain.Entities.RolePermission", b =>
                 {
                     b.HasOne("Fireworks.Domain.Entities.Permission", "Permission")
@@ -464,8 +434,6 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Fireworks.Domain.Entities.Permission", b =>
                 {
-                    b.Navigation("Children");
-
                     b.Navigation("RolePermissions");
                 });
 

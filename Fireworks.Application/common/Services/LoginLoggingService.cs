@@ -4,7 +4,7 @@ using IPTools.Core;
 using Microsoft.AspNetCore.Http;
 using UAParser;
 
-namespace Fireworks.Application.common;
+namespace Fireworks.Application.common.Services;
 
 public class LoginLoggingService(IApplicationDbContext db, IClientIpService ipService, IHttpContextAccessor accessor)
 {

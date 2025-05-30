@@ -1,4 +1,5 @@
 using Fireworks.Application.common;
+using Fireworks.Application.common.Behaviors;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

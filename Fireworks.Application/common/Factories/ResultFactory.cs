@@ -1,6 +1,6 @@
 using Ardalis.Result;
 
-namespace Fireworks.Application.common;
+namespace Fireworks.Application.common.Factories;
 
 public  static class ResultFactory
 {

@@ -1,5 +1,6 @@
 using Ardalis.Result;
 using Fireworks.Application.common;
+using Fireworks.Application.common.Services;
 using Fireworks.Domain.Identity.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
@@ -10,6 +11,7 @@ public class LoginHandler(
     UserManager<ApplicationUser> userManager,
     IJwtTokenService jwtTokenService,
     IApplicationDbContext dbContext,
+    IPermissionService permissionService,
     IClientIpService ipService,
     LoginLoggingService loginLogger)
     : IRequestHandler<LoginRequest, Result<AuthResponse>>
@@ -23,7 +25,8 @@ public class LoginHandler(
         }
 
         var roles = await userManager.GetRolesAsync(user);
-        var accessToken = jwtTokenService.GenerateAccessToken(user, roles);
+        var permissions = await permissionService.GetPermissionsForUserAsync(user, cancellationToken);
+        var accessToken = jwtTokenService.GenerateAccessToken(user, roles,permissions);
         var ip = ipService.GetClientIp();
         request.IpAddress = ip;
         var refreshToken = jwtTokenService.GenerateRefreshToken(ip);

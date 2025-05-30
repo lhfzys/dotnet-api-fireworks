@@ -9,6 +9,7 @@ namespace Fireworks.Application.Features.Auth.RefreshToken;
 
 public class RefreshTokenHandler(
     IApplicationDbContext dbContext,
+    IPermissionService permissionService,
     UserManager<ApplicationUser> userManager,
     IJwtTokenService jwtTokenService)
     : IRequestHandler<RefreshTokenRequest, Result<AuthResponse>>
@@ -25,7 +26,8 @@ public class RefreshTokenHandler(
         if (user == null) return Result.Error("User not found");
 
         var roles = await userManager.GetRolesAsync(user);
-        var newAccessToken = jwtTokenService.GenerateAccessToken(user, roles);
+        var permissions = await permissionService.GetPermissionsForUserAsync(user, cancellationToken);
+        var newAccessToken = jwtTokenService.GenerateAccessToken(user, roles,permissions);
         var newRefreshToken = jwtTokenService.GenerateRefreshToken(request.IpAddress);
 
         token.Revoked = DateTime.UtcNow;

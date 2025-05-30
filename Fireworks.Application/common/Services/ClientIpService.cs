@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Http;
 
-namespace Fireworks.Application.common;
+namespace Fireworks.Application.common.Services;
 
 public class ClientIpService(IHttpContextAccessor httpContextAccessor):IClientIpService
 {
