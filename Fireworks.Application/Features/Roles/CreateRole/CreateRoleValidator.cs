@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Fireworks.Application.Features.Roles;
+namespace Fireworks.Application.Features.Roles.CreateRole;
 
 public class CreateRoleValidator : AbstractValidator<CreateRoleRequest>
 {

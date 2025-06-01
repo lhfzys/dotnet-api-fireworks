@@ -4,7 +4,7 @@ using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 
-namespace Fireworks.Application.Features.Roles;
+namespace Fireworks.Application.Features.Roles.CreateRole;
 
 public class CreateRoleHandler(RoleManager<ApplicationRole> roleManager, ILogger<CreateRoleRequest> logger)
     : IRequestHandler<CreateRoleRequest, Result<Guid>>

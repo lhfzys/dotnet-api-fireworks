@@ -23,7 +23,8 @@ public static class MinimalApiResultExtensions
                 value = default(T),
                 errors = result.Errors,
                 validationErrors = result.ValidationErrors
-                    .GroupBy(e => e.Identifier)
+                    .GroupBy(e => e.Identifier?? "_no_identifier_")
+                    .Where(g => !string.IsNullOrEmpty(g.Key))
                     .ToDictionary(
                         g => g.Key,
                         g => g.Select(e => e.ErrorMessage).ToArray()

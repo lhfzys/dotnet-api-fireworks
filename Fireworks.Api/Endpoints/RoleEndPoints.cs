@@ -1,5 +1,6 @@
 using Fireworks.Api.Extensions;
 using Fireworks.Application.Features.Roles;
+using Fireworks.Application.Features.Roles.CreateRole;
 using Fireworks.Application.Features.Roles.DeleteRole;
 using Fireworks.Application.Features.Roles.GetAllRoles;
 using MediatR;

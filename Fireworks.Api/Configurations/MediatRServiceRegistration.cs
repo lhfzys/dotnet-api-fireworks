@@ -2,7 +2,7 @@
 
 using Fireworks.Application.common;
 
-namespace Fireworks.Api.Configurations.ServiceRegistrations;
+namespace Fireworks.Api.Configurations;
 
 public static class MediatRServiceRegistration
 {

@@ -1,4 +1,5 @@
 using Ardalis.Result;
+using Fireworks.Application.Features.Roles.CreateRole;
 using Fireworks.Domain.Identity.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

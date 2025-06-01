@@ -4,7 +4,7 @@ using Fireworks.Infrastructure.Persistence;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Identity;
 
-namespace Fireworks.Api.Configurations.ServiceRegistrations;
+namespace Fireworks.Api.Configurations;
 
 public static class IdentityServiceRegistration
 {

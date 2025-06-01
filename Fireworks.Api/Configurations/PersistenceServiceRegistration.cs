@@ -3,7 +3,7 @@ using Fireworks.Infrastructure.Auth;
 using Fireworks.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fireworks.Api.Configurations.ServiceRegistrations;
+namespace Fireworks.Api.Configurations;
 
 public static class PersistenceServiceRegistration
 {

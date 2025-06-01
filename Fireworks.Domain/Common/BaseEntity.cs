@@ -7,7 +7,7 @@ namespace Fireworks.Domain.Common;
 
 public abstract class BaseEntity<TId>:IEntity<TId>
 {
-    public TId Id { get; protected init; } = default!;
+    public TId Id { get; init; } = default!;
     
     [NotMapped]
     public Collection<DomainEvent> DomainEvents { get; } = new();

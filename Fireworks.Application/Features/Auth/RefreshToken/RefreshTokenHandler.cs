@@ -11,6 +11,7 @@ public class RefreshTokenHandler(
     IApplicationDbContext dbContext,
     IPermissionService permissionService,
     UserManager<ApplicationUser> userManager,
+    IClientIpService ipService,
     IJwtTokenService jwtTokenService)
     : IRequestHandler<RefreshTokenRequest, Result<AuthResponse>>
 {
@@ -28,6 +29,8 @@ public class RefreshTokenHandler(
         var roles = await userManager.GetRolesAsync(user);
         var permissions = await permissionService.GetPermissionsForUserAsync(user, cancellationToken);
         var newAccessToken = jwtTokenService.GenerateAccessToken(user, roles,permissions);
+        var ip = ipService.GetClientIp();
+        request.IpAddress = ip;
         var newRefreshToken = jwtTokenService.GenerateRefreshToken(request.IpAddress);
 
         token.Revoked = DateTime.UtcNow;

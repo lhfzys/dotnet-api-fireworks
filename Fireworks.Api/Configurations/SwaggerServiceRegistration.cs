@@ -4,7 +4,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
-namespace Fireworks.Api.Configurations.ServiceRegistrations;
+namespace Fireworks.Api.Configurations;
 
 public static class SwaggerServiceRegistration
 {
