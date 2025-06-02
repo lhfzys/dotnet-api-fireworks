@@ -1,4 +1,5 @@
 using Ardalis.Result;
+using Fireworks.Application.common.Interfaces;
 using Fireworks.Application.common.Models;
 using Fireworks.Application.common.Requests;
 using Mapster;

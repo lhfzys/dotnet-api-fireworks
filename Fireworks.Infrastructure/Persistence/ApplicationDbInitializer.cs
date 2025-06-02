@@ -24,6 +24,9 @@ public static class ApplicationDbInitializer
             var permissions = PermissionConstants.All
                 .Select(p => new Permission { Name = p })
                 .ToList();
+
+            context.Permissions.AddRange(permissions);
+            await context.SaveChangesAsync(); 
         }
         
         // 2. 添加超级管理员角色
@@ -32,7 +35,11 @@ public static class ApplicationDbInitializer
         if (adminRole == null)
         {
             adminRole = new ApplicationRole { Name = adminRoleName };
-            await roleManager.CreateAsync(adminRole);
+            var result = await roleManager.CreateAsync(adminRole);
+            if (!result.Succeeded)
+            {
+                throw new Exception("Failed to create admin role: " + string.Join(",", result.Errors.Select(e => e.Description)));
+            }
         }
         
         // 3. 给 Admin 角色分配所有权限
@@ -65,7 +72,14 @@ public static class ApplicationDbInitializer
                 Email = adminEmail,
                 EmailConfirmed = true
             };
-            await userManager.CreateAsync(adminUser, "123456");
+
+            var createResult = await userManager.CreateAsync(adminUser, "123456");
+            if (!createResult.Succeeded)
+            {
+                throw new Exception("Failed to create admin user: " + string.Join(",", createResult.Errors.Select(e => e.Description)));
+            }
+
+            // ⚠️ 这里角色必须已经成功插入，才能加成功
             await userManager.AddToRoleAsync(adminUser, adminRoleName);
         }
     }

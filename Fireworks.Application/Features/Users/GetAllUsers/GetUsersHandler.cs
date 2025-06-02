@@ -1,5 +1,6 @@
 using Fireworks.Application.common;
 using Fireworks.Application.common.Handlers;
+using Fireworks.Application.common.Interfaces;
 using Fireworks.Domain.Identity.Entities;
 
 

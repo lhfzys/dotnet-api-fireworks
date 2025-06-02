@@ -17,8 +17,9 @@ if (builder.Environment.EnvironmentName != "Testing")
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 var app = builder.Build();
-await ApplicationDbInitializer.InitializeAsync(app.Services);
 await PermissionSeeder.SeedAsync(app.Services);
+await ApplicationDbInitializer.InitializeAsync(app.Services);
+
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseSwaggerDocumentation();
 if (app.Environment.IsDevelopment())

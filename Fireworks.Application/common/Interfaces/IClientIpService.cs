@@ -1,4 +1,4 @@
-namespace Fireworks.Application.common;
+namespace Fireworks.Application.common.Interfaces;
 
 public interface IClientIpService
 {

@@ -1,4 +1,5 @@
 using Fireworks.Application.common;
+using Fireworks.Application.common.Interfaces;
 using Fireworks.Application.common.Services;
 using Fireworks.Application.common.Settings;
 using Mapster;
@@ -17,6 +18,7 @@ public static class SettingsServiceRegistration
         services.AddScoped<IClientIpService, ClientIpService>();
         services.AddScoped<LoginLoggingService>();
         services.AddScoped<IPermissionService,PermissionService>();
+        services.AddScoped<ICurrentUserService, CurrentUserService>();
         return services;
     }
 }

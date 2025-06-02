@@ -1,3 +1,4 @@
+using Fireworks.Application.common.Interfaces;
 using Microsoft.AspNetCore.Http;
 
 namespace Fireworks.Application.common.Services;

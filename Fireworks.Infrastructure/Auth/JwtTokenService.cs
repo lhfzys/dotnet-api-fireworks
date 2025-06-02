@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Fireworks.Application.common;
+using Fireworks.Application.common.Interfaces;
 using Fireworks.Application.common.Settings;
 using Fireworks.Domain.Identity.Entities;
 using Microsoft.IdentityModel.Tokens;

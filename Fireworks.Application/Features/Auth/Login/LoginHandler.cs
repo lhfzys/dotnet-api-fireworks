@@ -1,5 +1,6 @@
 using Ardalis.Result;
 using Fireworks.Application.common;
+using Fireworks.Application.common.Interfaces;
 using Fireworks.Application.common.Services;
 using Fireworks.Domain.Identity.Entities;
 using MediatR;

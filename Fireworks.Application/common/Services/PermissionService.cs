@@ -1,3 +1,4 @@
+using Fireworks.Application.common.Interfaces;
 using Fireworks.Domain.Identity.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -1,6 +1,6 @@
 using Fireworks.Domain.Identity.Entities;
 
-namespace Fireworks.Application.common;
+namespace Fireworks.Application.common.Interfaces;
 
 public interface IPermissionService
 {

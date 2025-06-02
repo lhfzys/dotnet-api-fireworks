@@ -15,21 +15,25 @@ public static class PermissionSeeder
         
         if (await db.Permissions.AnyAsync()) return;
         
-        var permissions = new List<Permission>
+        var system = new Permission
         {
-            new()
-            {
-                Name = "系统管理",
-                Code = "System",
-                Type = PermissionType.Directory,
-                Order = 1
-            },
+            Name = "系统管理",
+            Code = "System",
+            Type = PermissionType.Directory,
+            Order = 1
+        };
+        
+        await db.Permissions.AddAsync(system);
+        await db.SaveChangesAsync();
+        
+        var children = new List<Permission>
+        {
             new()
             {
                 Name = "用户管理",
                 Code = "System:User",
                 Type = PermissionType.Menu,
-                ParentId = null,
+                ParentId = system.Id,
                 Url = "/system/user",
                 Order = 1
             },
@@ -38,30 +42,22 @@ public static class PermissionSeeder
                 Name = "角色管理",
                 Code = "System:Role",
                 Type = PermissionType.Menu,
-                ParentId = null,
+                ParentId = system.Id,
                 Url = "/system/role",
-                Order = 1
+                Order = 2
             },
             new()
             {
                 Name = "权限管理",
                 Code = "System:Permission",
                 Type = PermissionType.Menu,
-                ParentId = null,
+                ParentId = system.Id,
                 Url = "/system/permission",
-                Order = 1
+                Order = 3
             }
-            
         };
 
-        var systemMenu = permissions[0];
-        var userMenu = permissions[1];
-        var roleMenu = permissions[2];
-        var permissionMenu = permissions[3];
-        userMenu.Parent = systemMenu;
-        roleMenu.Parent = systemMenu;
-        permissionMenu.Parent = systemMenu;
-        db.Permissions.AddRange(permissions);
+        await db.Permissions.AddRangeAsync(children);
         await db.SaveChangesAsync();
     }
 }

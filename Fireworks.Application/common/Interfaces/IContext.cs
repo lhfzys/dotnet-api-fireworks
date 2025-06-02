@@ -2,7 +2,7 @@ using Fireworks.Domain.Entities;
 using Fireworks.Domain.Identity.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Fireworks.Application.common;
+namespace Fireworks.Application.common.Interfaces;
 
 public interface IApplicationDbContext
 {

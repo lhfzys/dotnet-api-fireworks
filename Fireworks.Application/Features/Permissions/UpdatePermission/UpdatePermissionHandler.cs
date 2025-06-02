@@ -1,5 +1,6 @@
 using Ardalis.Result;
 using Fireworks.Application.common;
+using Fireworks.Application.common.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 

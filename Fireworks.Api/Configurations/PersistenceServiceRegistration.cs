@@ -1,4 +1,5 @@
 using Fireworks.Application.common;
+using Fireworks.Application.common.Interfaces;
 using Fireworks.Infrastructure.Auth;
 using Fireworks.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
