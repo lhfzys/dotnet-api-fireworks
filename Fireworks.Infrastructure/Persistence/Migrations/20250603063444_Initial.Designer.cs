@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Fireworks.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250530105400_UpdatePermission")]
-    partial class UpdatePermission
+    [Migration("20250603063444_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -70,20 +70,21 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Fireworks.Domain.Entities.RolePermission", b =>
                 {
-                    b.Property<Guid>("RoleId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("PermissionId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("PermissionId1")
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("RoleId", "PermissionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PermissionId");
 
-                    b.HasIndex("PermissionId1");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("RolePermissions");
                 });
@@ -372,14 +373,10 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Fireworks.Domain.Entities.RolePermission", b =>
                 {
                     b.HasOne("Fireworks.Domain.Entities.Permission", "Permission")
-                        .WithMany()
+                        .WithMany("RolePermissions")
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Fireworks.Domain.Entities.Permission", null)
-                        .WithMany("RolePermissions")
-                        .HasForeignKey("PermissionId1");
 
                     b.HasOne("Fireworks.Domain.Identity.Entities.ApplicationRole", "Role")
                         .WithMany("RolePermissions")
@@ -444,13 +441,13 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
                 {
                     b.HasOne("Fireworks.Domain.Identity.Entities.ApplicationRole", null)
-                        .WithMany()
+                        .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Fireworks.Domain.Identity.Entities.ApplicationUser", null)
-                        .WithMany()
+                        .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -475,11 +472,15 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Fireworks.Domain.Identity.Entities.ApplicationRole", b =>
                 {
                     b.Navigation("RolePermissions");
+
+                    b.Navigation("UserRoles");
                 });
 
             modelBuilder.Entity("Fireworks.Domain.Identity.Entities.ApplicationUser", b =>
                 {
                     b.Navigation("RefreshTokens");
+
+                    b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
         }

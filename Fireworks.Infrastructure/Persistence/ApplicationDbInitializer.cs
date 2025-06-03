@@ -78,8 +78,6 @@ public static class ApplicationDbInitializer
             {
                 throw new Exception("Failed to create admin user: " + string.Join(",", createResult.Errors.Select(e => e.Description)));
             }
-
-            // ⚠️ 这里角色必须已经成功插入，才能加成功
             await userManager.AddToRoleAsync(adminUser, adminRoleName);
         }
     }

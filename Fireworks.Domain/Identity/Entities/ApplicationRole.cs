@@ -9,5 +9,4 @@ public class ApplicationRole:IdentityRole<Guid>
     
     public ICollection<RolePermission> RolePermissions { get; set; } = new List<RolePermission>();
     public ICollection<IdentityUserRole<Guid>> UserRoles { get; set; } = new List<IdentityUserRole<Guid>>();
-    public ICollection<ApplicationUser> Users { get; set; } = new List<ApplicationUser>();
 }

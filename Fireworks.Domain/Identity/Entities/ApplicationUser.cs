@@ -7,5 +7,4 @@ public class ApplicationUser:IdentityUser<Guid>
     public string? ImageUrl { get; set; }
     public ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
     public ICollection<IdentityUserRole<Guid>> UserRoles { get; set; } = new List<IdentityUserRole<Guid>>();
-    public ICollection<ApplicationRole> Roles { get; set; } = new List<ApplicationRole>();
 }

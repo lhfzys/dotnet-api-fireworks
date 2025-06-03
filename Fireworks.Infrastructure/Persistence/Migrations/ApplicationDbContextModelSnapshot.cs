@@ -67,20 +67,21 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Fireworks.Domain.Entities.RolePermission", b =>
                 {
-                    b.Property<Guid>("RoleId")
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("PermissionId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid?>("PermissionId1")
+                    b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("RoleId", "PermissionId");
+                    b.HasKey("Id");
 
                     b.HasIndex("PermissionId");
 
-                    b.HasIndex("PermissionId1");
+                    b.HasIndex("RoleId");
 
                     b.ToTable("RolePermissions");
                 });
@@ -331,19 +332,9 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
                     b.Property<Guid>("RoleId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("RolesId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("UsersId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("UserId", "RoleId");
 
                     b.HasIndex("RoleId");
-
-                    b.HasIndex("RolesId");
-
-                    b.HasIndex("UsersId");
 
                     b.ToTable("UserRoles", (string)null);
                 });
@@ -379,14 +370,10 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Fireworks.Domain.Entities.RolePermission", b =>
                 {
                     b.HasOne("Fireworks.Domain.Entities.Permission", "Permission")
-                        .WithMany()
+                        .WithMany("RolePermissions")
                         .HasForeignKey("PermissionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Fireworks.Domain.Entities.Permission", null)
-                        .WithMany("RolePermissions")
-                        .HasForeignKey("PermissionId1");
 
                     b.HasOne("Fireworks.Domain.Identity.Entities.ApplicationRole", "Role")
                         .WithMany("RolePermissions")
@@ -456,21 +443,9 @@ namespace Fireworks.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Fireworks.Domain.Identity.Entities.ApplicationRole", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Fireworks.Domain.Identity.Entities.ApplicationUser", null)
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Fireworks.Domain.Identity.Entities.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

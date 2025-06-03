@@ -3,7 +3,7 @@ using Fireworks.Domain.Identity.Entities;
 
 namespace Fireworks.Domain.Entities;
 
-public class RolePermission
+public class RolePermission:BaseEntity<Guid>
 {
     public Guid RoleId { get; set; }
     public ApplicationRole Role { get; set; } = null!;
