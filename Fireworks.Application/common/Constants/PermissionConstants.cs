@@ -1,4 +1,4 @@
-namespace Fireworks.Domain.Constants;
+namespace Fireworks.Application.common.Constants;
 
 public static class PermissionConstants
 {

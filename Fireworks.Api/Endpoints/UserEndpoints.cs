@@ -1,4 +1,5 @@
 using Fireworks.Api.Extensions;
+using Fireworks.Api.Interfaces;
 using Fireworks.Application.Features.Menus;
 using Fireworks.Application.Features.Users.CreateUser;
 using Fireworks.Application.Features.Users.DeleteUser;
@@ -9,14 +10,15 @@ using MediatR;
 
 namespace Fireworks.Api.Endpoints;
 
-public static class UserEndpoints
+public class UserEndPoints : IEndpointRegistrar
 {
-    public static void MapUserEndpoints(this IEndpointRouteBuilder builder)
+    public void MapEndpoints(IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("api/users").WithTags("User");
+        var group = builder.MapGroup("api/users").WithTags("User").RequireAuthorization();
 
         group.MapPost("/", async (IMediator mediator, CreateUserRequest request)
-            => (await mediator.Send(request)).ToCustomMinimalApiResult());
+                => (await mediator.Send(request)).ToCustomMinimalApiResult())
+            .RequireAuthorization("Permission:System:User");
 
         group.MapGet("/",
             async (IMediator mediator, [AsParameters] GetUsersRequest request) =>

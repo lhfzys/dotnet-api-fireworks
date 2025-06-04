@@ -1,4 +1,5 @@
 using Fireworks.Api.Extensions;
+using Fireworks.Api.Interfaces;
 using Fireworks.Application.Features.Permissions.CreatePermission;
 using Fireworks.Application.Features.Permissions.DeletePermission;
 using Fireworks.Application.Features.Permissions.GetAllPermissions;
@@ -7,11 +8,11 @@ using MediatR;
 
 namespace Fireworks.Api.Endpoints;
 
-public static class PermissionEndpoints
+public class PermissionEndpoints : IEndpointRegistrar
 {
-    public static void MapPermissionEndpoints(this IEndpointRouteBuilder builder)
+    public void MapEndpoints(IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("api/permission").WithTags("Permission");
+        var group = builder.MapGroup("api/permission").WithTags("Permission").RequireAuthorization();
 
         group.MapPost("/", async (IMediator mediator, CreatePermissionRequest request) =>
             (await mediator.Send(request)).ToCustomMinimalApiResult());

@@ -1,14 +1,15 @@
 using System.Runtime.InteropServices;
 using Fireworks.Api.Extensions;
+using Fireworks.Api.Interfaces;
 using Fireworks.Application.Features.UserRoles.AssignRole;
 using Fireworks.Application.Features.UserRoles.GetUserRoles;
 using MediatR;
 
 namespace Fireworks.Api.Endpoints;
 
-public static class UserRolesEndPoints
+public class UserRolesEndPoints : IEndpointRegistrar
 {
-    public static void MapUserRolesEndpoints(this IEndpointRouteBuilder builder)
+    public void MapEndpoints(IEndpointRouteBuilder builder)
     {
         var group = builder.MapGroup("api/user-roles").WithTags("UserRoles").RequireAuthorization();
 

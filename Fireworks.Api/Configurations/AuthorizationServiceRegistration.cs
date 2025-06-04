@@ -1,7 +1,11 @@
 using System.Text;
+using Fireworks.Application.common.Authorization;
+using Fireworks.Application.common.Constants;
 using Fireworks.Application.common.Settings;
 using Fireworks.Domain.Constants;
+using Fireworks.Infrastructure.Authorization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Fireworks.Api.Configurations;
@@ -31,6 +35,8 @@ public static class AuthorizationServiceRegistration
                         Encoding.UTF8.GetBytes(jwtSettings?.Key!))
                 };
             });
+        services.AddScoped<IAuthorizationHandler, PermissionAuthorizationHandler>();;
+        services.AddSingleton<IAuthorizationPolicyProvider, PermissionPolicyProvider>();
         services.AddAuthorization(options =>
         {
             foreach (var permission in PermissionConstants.All)

@@ -1,5 +1,6 @@
+using System.Reflection;
 using Fireworks.Api.Configurations;
-using Fireworks.Api.Endpoints;
+using Fireworks.Api.Interfaces;
 using Fireworks.Api.Middleware;
 using Fireworks.Infrastructure.Persistence;
 using Fireworks.Infrastructure.Seeders;
@@ -42,11 +43,13 @@ app.Use(async (context, next) =>
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
-app.MapUserEndpoints();
-app.MapRoleEndpoints();
-app.MapUserRolesEndpoints();
-app.MapLoginEndpoints();
-app.MapRolePermissionEndpoints();
-app.MapPermissionEndpoints();
-
+var endpointRegistrars = Assembly.GetExecutingAssembly()
+    .GetTypes()
+    .Where(t => typeof(IEndpointRegistrar).IsAssignableFrom(t) && t is { IsInterface: false, IsAbstract: false })
+    .Select(Activator.CreateInstance)
+    .Cast<IEndpointRegistrar>();
+foreach (var registrar in endpointRegistrars)
+{
+    registrar.MapEndpoints(app);
+}
 app.Run();

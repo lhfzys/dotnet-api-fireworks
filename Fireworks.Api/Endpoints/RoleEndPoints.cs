@@ -1,4 +1,5 @@
 using Fireworks.Api.Extensions;
+using Fireworks.Api.Interfaces;
 using Fireworks.Application.Features.Roles;
 using Fireworks.Application.Features.Roles.CreateRole;
 using Fireworks.Application.Features.Roles.DeleteRole;
@@ -8,9 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Fireworks.Api.Endpoints;
 
-public static class RoleEndPoints
+public class RoleEndPoints : IEndpointRegistrar
 {
-    public static void MapRoleEndpoints(this IEndpointRouteBuilder builder)
+    public void MapEndpoints(IEndpointRouteBuilder builder)
     {
         var group = builder.MapGroup("api/role").WithTags("Role").RequireAuthorization();
 
@@ -22,8 +23,8 @@ public static class RoleEndPoints
         // 创建角色
         group.MapPost("/",
             async (IMediator mediator, CreateRoleRequest request) =>
-            (await mediator.Send(request)).ToCustomMinimalApiResult());
-        
+                (await mediator.Send(request)).ToCustomMinimalApiResult());
+
         group.MapDelete("/{roleName}",
             async (string roleName, IMediator mediator) =>
                 (await mediator.Send(new DeleteRoleRequest(RoleName: roleName))).ToCustomMinimalApiResult());
