@@ -6,9 +6,9 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Fireworks.Application.Features.UserRoles.ReplaceRoles;
 
-public class ReplaceRolesHandler(UserManager<ApplicationUser> userManager) : IRequestHandler<AssignRoleRequest, Result>
+public class ReplaceRolesHandler(UserManager<ApplicationUser> userManager) : IRequestHandler<ReplaceRoleRequest, Result>
 {
-    public async Task<Result> Handle(AssignRoleRequest request, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ReplaceRoleRequest request, CancellationToken cancellationToken)
     {
         var user = await userManager.FindByIdAsync(request.UserId.ToString());
         if (user == null) return Result.Invalid(new ValidationError(nameof(request.UserId), "用户不存在"));

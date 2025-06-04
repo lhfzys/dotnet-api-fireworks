@@ -23,7 +23,7 @@ public static class MinimalApiResultExtensions
                 value = default(T),
                 errors = result.Errors,
                 validationErrors = result.ValidationErrors
-                    .GroupBy(e => e.Identifier?? "_no_identifier_")
+                    .GroupBy(e => e.Identifier ?? "_no_identifier_")
                     .Where(g => !string.IsNullOrEmpty(g.Key))
                     .ToDictionary(
                         g => g.Key,
@@ -48,6 +48,7 @@ public static class MinimalApiResultExtensions
             }),
 
             ResultStatus.Forbidden => Results.Forbid(),
+            ResultStatus.Unauthorized => Results.Unauthorized(),
 
             _ => Results.BadRequest()
         };

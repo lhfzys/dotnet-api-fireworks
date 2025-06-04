@@ -1,5 +1,6 @@
 using Fireworks.Api.Extensions;
 using Fireworks.Api.Interfaces;
+using Fireworks.Application.common.Constants;
 using Fireworks.Application.Features.Roles;
 using Fireworks.Application.Features.Roles.CreateRole;
 using Fireworks.Application.Features.Roles.DeleteRole;
@@ -13,7 +14,7 @@ public class RoleEndPoints : IEndpointRegistrar
 {
     public void MapEndpoints(IEndpointRouteBuilder builder)
     {
-        var group = builder.MapGroup("api/role").WithTags("Role").RequireAuthorization();
+        var group = builder.MapGroup("api/role").WithTags("Role").RequireAuthorization(PermissionPolicies.RequireAdmin);
 
         // 获取所有角色
         group.MapGet("/",
