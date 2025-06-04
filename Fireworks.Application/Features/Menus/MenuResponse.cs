@@ -8,5 +8,4 @@ public record MenuResponse(
     string? Icon,
     string? Url,
     int Order,
-    List<MenuResponse> Children
-);
+    List<MenuResponse> Children);
