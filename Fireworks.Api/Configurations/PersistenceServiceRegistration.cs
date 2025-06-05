@@ -28,7 +28,7 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IApplicationDbContext>(provider =>
             provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IJwtTokenService, JwtTokenService>();
-        services.AddScoped<PermissionSynchronizationService>();
+        // services.AddScoped<PermissionSynchronizationService>();
         services.AddScoped<IAuditLogService, AuditLogService>();
         return services;
     }

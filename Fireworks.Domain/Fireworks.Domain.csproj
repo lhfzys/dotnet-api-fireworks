@@ -12,4 +12,12 @@
       <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="9.0.5" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Constants\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Fireworks.Shared\Fireworks.Shared.csproj" />
+    </ItemGroup>
+
 </Project>

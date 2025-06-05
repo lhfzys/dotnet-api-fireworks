@@ -2,7 +2,7 @@ using System.Reflection;
 using Fireworks.Api.Configurations;
 using Fireworks.Api.Interfaces;
 using Fireworks.Api.Middleware;
-using Fireworks.Infrastructure.Authorization;
+using Fireworks.Infrastructure.Permissions;
 using Fireworks.Infrastructure.Persistence;
 using Fireworks.Infrastructure.Seeders;
 
@@ -16,6 +16,7 @@ if (builder.Environment.EnvironmentName != "Testing")
 {
     builder.Host.UseLoggingServices(builder.Configuration);
 }
+
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 var app = builder.Build();
@@ -30,6 +31,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.UseDeveloperExceptionPage();
 }
+
 app.Use(async (context, next) =>
 {
     try
@@ -54,9 +56,16 @@ foreach (var registrar in endpointRegistrars)
 {
     registrar.MapEndpoints(app);
 }
-using (var scope = app.Services.CreateScope())
-{
-    var syncService = scope.ServiceProvider.GetRequiredService<PermissionSynchronizationService>();
-    await syncService.SyncPermissionsAsync();
-}
+
+// using (var scope = app.Services.CreateScope())
+// {
+//     var syncService = scope.ServiceProvider.GetRequiredService<PermissionSynchronizationService>();
+//     await syncService.SyncPermissionsAsync();
+// }
+// app.Lifetime.ApplicationStarted.Register(async () =>
+// {
+//     using var scope = app.Services.CreateScope();
+//     var permissionSyncService = scope.ServiceProvider.GetRequiredService<PermissionSynchronizationService>();
+//     await permissionSyncService.SyncPermissionsAsync();
+// });
 app.Run();

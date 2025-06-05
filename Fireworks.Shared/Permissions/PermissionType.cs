@@ -1,4 +1,4 @@
-namespace Fireworks.Domain.Constants;
+namespace Fireworks.Shared.Permissions;
 
 public enum PermissionType
 {

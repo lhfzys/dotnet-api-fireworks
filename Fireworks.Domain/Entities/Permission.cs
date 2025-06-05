@@ -1,5 +1,5 @@
 using Fireworks.Domain.Common;
-using Fireworks.Domain.Constants;
+using Fireworks.Shared.Permissions;
 
 namespace Fireworks.Domain.Entities;
 

@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fireworks.Domain", "Firewor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fireworks.Infrastructure", "Fireworks.Infrastructure\Fireworks.Infrastructure.csproj", "{532EBFF9-3DD6-4BEA-B850-0CA0DC3355B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fireworks.Shared", "Fireworks.Shared\Fireworks.Shared.csproj", "{5C7EC9C5-2D76-4A58-92DA-911BE0E73801}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,7 @@ Global
 		{6F0B14AA-A47B-4E43-A9A8-F87EE62A75CC} = {C976C27F-BAB1-42E2-8B07-0F992A1C341E}
 		{F280485E-3C3E-41F7-97DC-5352F6DE6A81} = {C976C27F-BAB1-42E2-8B07-0F992A1C341E}
 		{532EBFF9-3DD6-4BEA-B850-0CA0DC3355B3} = {C976C27F-BAB1-42E2-8B07-0F992A1C341E}
+		{5C7EC9C5-2D76-4A58-92DA-911BE0E73801} = {C976C27F-BAB1-42E2-8B07-0F992A1C341E}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{D5B7807A-FC1C-402C-ADDF-3390E94E2C4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -38,5 +41,9 @@ Global
 		{532EBFF9-3DD6-4BEA-B850-0CA0DC3355B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{532EBFF9-3DD6-4BEA-B850-0CA0DC3355B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{532EBFF9-3DD6-4BEA-B850-0CA0DC3355B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C7EC9C5-2D76-4A58-92DA-911BE0E73801}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C7EC9C5-2D76-4A58-92DA-911BE0E73801}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C7EC9C5-2D76-4A58-92DA-911BE0E73801}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C7EC9C5-2D76-4A58-92DA-911BE0E73801}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

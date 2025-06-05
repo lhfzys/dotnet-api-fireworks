@@ -2,6 +2,7 @@ using Fireworks.Application.common.Constants;
 using Fireworks.Domain.Constants;
 using Fireworks.Domain.Entities;
 using Fireworks.Domain.Identity.Entities;
+using Fireworks.Infrastructure.Permissions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,12 +23,8 @@ public static class ApplicationDbInitializer
         // 1. 添加权限点
         if (!context.Permissions.Any())
         {
-            var permissions = PermissionConstants.All
-                .Select(p => new Permission { Name = p })
-                .ToList();
-
-            context.Permissions.AddRange(permissions);
-            await context.SaveChangesAsync(); 
+            var permissionSyncService = scope.ServiceProvider.GetRequiredService<PermissionSynchronizationService>();
+            await permissionSyncService.SyncAsync();
         }
         
         // 2. 添加超级管理员角色

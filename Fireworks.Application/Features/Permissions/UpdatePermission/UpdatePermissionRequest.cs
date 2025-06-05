@@ -1,5 +1,5 @@
 using Ardalis.Result;
-using Fireworks.Domain.Constants;
+using Fireworks.Shared.Permissions;
 using MediatR;
 
 namespace Fireworks.Application.Features.Permissions.UpdatePermission;

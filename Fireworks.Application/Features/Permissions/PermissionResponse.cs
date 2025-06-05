@@ -1,4 +1,4 @@
-using Fireworks.Domain.Constants;
+using Fireworks.Shared.Permissions;
 
 namespace Fireworks.Application.Features.Permissions;
 

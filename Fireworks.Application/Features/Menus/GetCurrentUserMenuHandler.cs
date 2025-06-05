@@ -2,6 +2,7 @@ using Ardalis.Result;
 using Fireworks.Application.common.Interfaces;
 using Fireworks.Domain.Constants;
 using Fireworks.Domain.Entities;
+using Fireworks.Shared.Permissions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
