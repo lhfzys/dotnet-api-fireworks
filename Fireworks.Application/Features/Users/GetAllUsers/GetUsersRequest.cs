@@ -7,4 +7,5 @@ namespace Fireworks.Application.Features.Users.GetAllUsers;
 
 public class GetUsersRequest : PaginationRequest, IRequest<Result<PaginatedResponse<UserResponse>>>
 {
+    public string? Username { get; set; }
 }

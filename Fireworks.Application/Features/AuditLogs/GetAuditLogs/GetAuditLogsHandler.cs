@@ -1,4 +1,3 @@
-using Ardalis.Result;
 using Fireworks.Application.common.Handlers;
 using Fireworks.Application.common.Interfaces;
 using Fireworks.Domain.Entities;

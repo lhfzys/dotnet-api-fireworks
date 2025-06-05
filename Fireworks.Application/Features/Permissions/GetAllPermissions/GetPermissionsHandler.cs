@@ -1,4 +1,4 @@
-using Fireworks.Application.common;
+using Fireworks.Application.common.extensions;
 using Fireworks.Application.common.Handlers;
 using Fireworks.Application.common.Interfaces;
 using Fireworks.Domain.Entities;
@@ -12,12 +12,10 @@ public class GetPermissionsHandler(IApplicationDbContext context)
     {
         var query = context.Permissions.AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(request.Search))
-        {
-            query = query.Where(p =>
-                p.Name!.Contains(request.Search) ||
-                p.Code.Contains(request.Search, StringComparison.CurrentCultureIgnoreCase));
-        }
+        query = query.WhereIf(!string.IsNullOrWhiteSpace(request.Name),
+                p => request.Name != null && p.Name.Contains(request.Name))
+            .WhereIf(!string.IsNullOrWhiteSpace(request.Code),
+                p => request.Code != null && p.Code.Contains(request.Code, StringComparison.CurrentCultureIgnoreCase));
 
         return query.OrderBy(u => u.Order);
     }

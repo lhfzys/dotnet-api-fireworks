@@ -1,4 +1,5 @@
 using Fireworks.Application.common;
+using Fireworks.Application.common.extensions;
 using Fireworks.Application.common.Handlers;
 using Fireworks.Application.common.Interfaces;
 using Fireworks.Domain.Identity.Entities;
@@ -13,12 +14,8 @@ public class GetUsersHandler(IApplicationDbContext context)
     {
         var query = context.Users.AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(request.Search))
-        {
-            query = query.Where(u =>
-                u.UserName!.Contains(request.Search) ||
-                u.Email!.Contains(request.Search));
-        }
+        query = query.WhereIf(!string.IsNullOrWhiteSpace(request.Username),
+            u => request.Username != null && u.UserName!.Contains(request.Username));
 
         return query.OrderBy(u => u.UserName);
     }
