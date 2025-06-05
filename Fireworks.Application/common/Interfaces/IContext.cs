@@ -12,5 +12,6 @@ public interface IApplicationDbContext
     DbSet<ApplicationRole> Roles { get; set; }
     DbSet<Permission> Permissions { get; set; }
     DbSet<RolePermission> RolePermissions { get; set; }
+    public DbSet<AuditLog> AuditLogs { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

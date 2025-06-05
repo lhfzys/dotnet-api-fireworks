@@ -8,17 +8,11 @@ using X.PagedList.EF;
 
 namespace Fireworks.Application.common.Handlers;
 
-public abstract class PaginationQueryHandler<TRequest, TEntity, TDto>
+public abstract class PaginationQueryHandler<TRequest, TEntity, TDto>(IApplicationDbContext context)
     : IRequestHandler<TRequest, Result<PaginatedResponse<TDto>>>
     where TRequest : PaginationRequest, IRequest<Result<PaginatedResponse<TDto>>>
     where TEntity : class
 {
-    protected readonly IApplicationDbContext context;
-
-    protected PaginationQueryHandler(IApplicationDbContext context)
-    {
-        this.context = context;
-    }
 
     protected abstract IQueryable<TEntity> BuildQuery(TRequest request);
 

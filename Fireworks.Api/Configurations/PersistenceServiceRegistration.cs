@@ -1,6 +1,9 @@
 using Fireworks.Application.common;
 using Fireworks.Application.common.Interfaces;
+using Fireworks.Application.common.Services;
+using Fireworks.Domain.Constants;
 using Fireworks.Infrastructure.Auth;
+using Fireworks.Infrastructure.Authorization;
 using Fireworks.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +28,8 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IApplicationDbContext>(provider =>
             provider.GetRequiredService<ApplicationDbContext>());
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<PermissionSynchronizationService>();
+        services.AddScoped<IAuditLogService, AuditLogService>();
         return services;
     }
 }

@@ -2,6 +2,7 @@ using System.Reflection;
 using Fireworks.Api.Configurations;
 using Fireworks.Api.Interfaces;
 using Fireworks.Api.Middleware;
+using Fireworks.Infrastructure.Authorization;
 using Fireworks.Infrastructure.Persistence;
 using Fireworks.Infrastructure.Seeders;
 
@@ -22,6 +23,7 @@ await PermissionSeeder.SeedAsync(app.Services);
 await ApplicationDbInitializer.InitializeAsync(app.Services);
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
+app.UseMiddleware<AuditLogMiddleware>();
 app.UseSwaggerDocumentation();
 if (app.Environment.IsDevelopment())
 {
@@ -51,5 +53,10 @@ var endpointRegistrars = Assembly.GetExecutingAssembly()
 foreach (var registrar in endpointRegistrars)
 {
     registrar.MapEndpoints(app);
+}
+using (var scope = app.Services.CreateScope())
+{
+    var syncService = scope.ServiceProvider.GetRequiredService<PermissionSynchronizationService>();
+    await syncService.SyncPermissionsAsync();
 }
 app.Run();
