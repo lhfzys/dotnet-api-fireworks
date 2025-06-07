@@ -2,6 +2,7 @@ using Fireworks.Application.common;
 using Fireworks.Application.common.Interfaces;
 using Fireworks.Application.common.Services;
 using Fireworks.Application.common.Settings;
+using Fireworks.Infrastructure.Permissions;
 using Mapster;
 using Microsoft.Extensions.Options;
 
@@ -19,6 +20,7 @@ public static class SettingsServiceRegistration
         services.AddScoped<LoginLoggingService>();
         services.AddScoped<IPermissionService,PermissionService>();
         services.AddScoped<ICurrentUserService, CurrentUserService>();
+        services.AddScoped<PermissionSynchronizationService>();
         return services;
     }
 }

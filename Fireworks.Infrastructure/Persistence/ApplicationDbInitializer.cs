@@ -17,15 +17,12 @@ public static class ApplicationDbInitializer
         var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<ApplicationRole>>();
         var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+        var permissionSyncService = scope.ServiceProvider.GetRequiredService<PermissionSynchronizationService>();
         
         await context.Database.MigrateAsync();
         
-        // 1. 添加权限点
-        if (!context.Permissions.Any())
-        {
-            var permissionSyncService = scope.ServiceProvider.GetRequiredService<PermissionSynchronizationService>();
-            await permissionSyncService.SyncAsync();
-        }
+        // 1. 同步权限点
+        await permissionSyncService.SyncAsync();
         
         // 2. 添加超级管理员角色
         const string adminRoleName = "Admin";
@@ -35,9 +32,7 @@ public static class ApplicationDbInitializer
             adminRole = new ApplicationRole { Name = adminRoleName };
             var result = await roleManager.CreateAsync(adminRole);
             if (!result.Succeeded)
-            {
-                throw new Exception("Failed to create admin role: " + string.Join(",", result.Errors.Select(e => e.Description)));
-            }
+                throw new Exception("创建管理员角色失败：" + string.Join(",", result.Errors.Select(e => e.Description)));;
         }
         
         // 3. 给 Admin 角色分配所有权限
@@ -74,7 +69,7 @@ public static class ApplicationDbInitializer
             var createResult = await userManager.CreateAsync(adminUser, "123456");
             if (!createResult.Succeeded)
             {
-                throw new Exception("Failed to create admin user: " + string.Join(",", createResult.Errors.Select(e => e.Description)));
+                throw new Exception("创建管理员用户失败：" + string.Join(",", createResult.Errors.Select(e => e.Description)));
             }
             await userManager.AddToRoleAsync(adminUser, adminRoleName);
         }
