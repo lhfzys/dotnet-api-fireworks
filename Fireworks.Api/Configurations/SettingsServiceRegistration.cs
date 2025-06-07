@@ -4,6 +4,7 @@ using Fireworks.Application.common.Services;
 using Fireworks.Application.common.Settings;
 using Fireworks.Domain.Logging;
 using Fireworks.Infrastructure.Behaviors;
+using Fireworks.Infrastructure.Cache;
 using Fireworks.Infrastructure.Logging;
 using Fireworks.Infrastructure.Permissions;
 using Mapster;
@@ -20,6 +21,11 @@ public static class SettingsServiceRegistration
         services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
         services.AddSingleton(resolver => resolver.GetRequiredService<IOptions<JwtSettings>>().Value);
         services.AddHttpContextAccessor();
+        // services.AddSingleton<IConnectionMultiplexer>(sp =>
+        //     ConnectionMultiplexer.Connect(configuration["Redis:ConnectionString"]!)
+        // );
+        // services.AddScoped<IRedisCacheService, RedisCacheService>();
+
         services.AddScoped<IClientIpService, ClientIpService>();
         services.AddScoped<LoginLoggingService>();
         services.AddScoped<IPermissionService, PermissionService>();
