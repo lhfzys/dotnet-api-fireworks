@@ -32,7 +32,7 @@ public class AuditLogMiddleware(RequestDelegate next)
         var log = new AuditLog
         {
             UserId = currentUser.Id,
-            UserName = currentUser.UserName,
+            UserName = currentUser.UserName?? "匿名",
             HttpMethod = request.Method,
             Url = $"{request.Scheme}://{request.Host}{request.Path}{request.QueryString}",
             IpAddress = context.Connection.RemoteIpAddress?.ToString() ?? "unknown",

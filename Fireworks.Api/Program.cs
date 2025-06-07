@@ -2,6 +2,7 @@ using System.Reflection;
 using Fireworks.Api.Configurations;
 using Fireworks.Api.Interfaces;
 using Fireworks.Api.Middleware;
+using Fireworks.Infrastructure.Common.Middleware;
 using Fireworks.Infrastructure.Permissions;
 using Fireworks.Infrastructure.Persistence;
 using Fireworks.Infrastructure.Seeders;
@@ -44,6 +45,7 @@ app.Use(async (context, next) =>
         throw;
     }
 });
+app.UseGlobalExceptionHandling();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseHttpsRedirection();
