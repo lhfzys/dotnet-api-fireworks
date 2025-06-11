@@ -5,6 +5,7 @@ using Fireworks.Application.Features.Menus;
 using Fireworks.Application.Features.Users.CreateUser;
 using Fireworks.Application.Features.Users.DeleteUser;
 using Fireworks.Application.Features.Users.GetAllUsers;
+using Fireworks.Application.Features.Users.GetCurrentUser;
 using Fireworks.Application.Features.Users.GetUserById;
 using Fireworks.Application.Features.Users.UpdateUser;
 using MediatR;
@@ -40,5 +41,7 @@ public class UserEndPoints : IEndpointRegistrar
             .RequireAuthorization()
             .WithName("GetCurrentUserMenu")
             .WithTags("User");
+        group.MapGet("/me", async (IMediator mediator) =>
+            (await mediator.Send(new GetCurrentUserRequest())).ToCustomMinimalApiResult());
     }
 }

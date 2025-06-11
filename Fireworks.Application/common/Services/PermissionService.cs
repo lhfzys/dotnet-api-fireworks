@@ -15,7 +15,7 @@ public class PermissionService(IApplicationDbContext dbContext, UserManager<Appl
         var roles = await userManager.GetRolesAsync(user);
         var permissions = await dbContext.RolePermissions
             .Where(rp => rp.Role.Name != null && roles.Contains(rp.Role.Name))
-            .Select(rp => rp.Permission.Name)
+            .Select(rp => rp.Permission.Code)
             .Distinct()
             .ToListAsync(cancellationToken);
 
