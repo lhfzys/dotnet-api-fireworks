@@ -32,7 +32,8 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.UseDeveloperExceptionPage();
 }
-
+var corsPolicy = app.Environment.IsDevelopment() ? "DevCors" : "ProdCors";
+app.UseCors(corsPolicy);
 app.Use(async (context, next) =>
 {
     try

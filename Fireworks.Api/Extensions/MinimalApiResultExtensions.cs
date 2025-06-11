@@ -17,7 +17,7 @@ public static class MinimalApiResultExtensions
                 validationErrors = new Dictionary<string, string[]>()
             }),
 
-            ResultStatus.Invalid => Results.BadRequest(new
+            ResultStatus.Invalid => Results.Ok(new
             {
                 status = "Invalid",
                 value = default(T),
@@ -31,7 +31,7 @@ public static class MinimalApiResultExtensions
                     )
             }),
 
-            ResultStatus.Error => Results.BadRequest(new
+            ResultStatus.Error => Results.Ok(new
             {
                 status = "Error",
                 value = default(T),
@@ -39,7 +39,7 @@ public static class MinimalApiResultExtensions
                 validationErrors = new Dictionary<string, string[]>()
             }),
 
-            ResultStatus.NotFound => Results.NotFound(new
+            ResultStatus.NotFound => Results.Ok(new
             {
                 status = "NotFound",
                 value = default(T),

@@ -33,6 +33,24 @@ public static class SettingsServiceRegistration
         services.AddScoped<PermissionSynchronizationService>();
         services.AddScoped<IAuditLogger, AuditLogger>();
         services.AddTransient(typeof(IPipelineBehavior<,>), typeof(AuditBehavior<,>));
+        services.AddCors(options =>
+        {
+            options.AddPolicy("DevCors", policy =>
+            {
+                policy.WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+            options.AddPolicy("ProdCors", policy =>
+            {
+                policy
+                    .WithOrigins(configuration["FrontendUrl"] ?? "https://fireworks.com")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowCredentials();
+            });
+        });
         return services;
     }
 }
